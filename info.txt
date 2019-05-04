@@ -1,0 +1,8 @@
+Para instalar las dependencias del proyecto: Abrir una terminnal en la carpeta
+TECHealth y correr siguientes comandos:
+> npm install express morgan mongoose multer
+> npm install nodemon -D
+
+Para correr el servidor en modo desarrollo:
+> npm run dev
+(importante tener corriendo la base datos mongo)
