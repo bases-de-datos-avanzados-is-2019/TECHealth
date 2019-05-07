@@ -6,3 +6,5 @@ TECHealth y correr siguientes comandos:
 Para correr el servidor en modo desarrollo:
 > npm run dev
 (importante tener corriendo la base datos mongo)
+
+bgufjytdg
