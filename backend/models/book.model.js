@@ -6,6 +6,7 @@ const BookSchema = new Schema({
     nombre: {type: String, required: true},
     tema: {type: String, required: true},
     descripcion: {type: String, required: true},
+    libreria: {type: String, required: true},
     cantidadVendida: {type:Number, required: true},
     cantdadDisponible: {type: Number, required: true},
     foto: {type: String, required: true},
