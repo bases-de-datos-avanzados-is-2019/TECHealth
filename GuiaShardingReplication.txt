@@ -4,11 +4,11 @@ la carpeta data con las subcarpetas rs1, rs2, rs3:
 (directorio(carpeta) shardingTest creado anteriormente en el escritorio).
 
 Se crean 3 instancias mongod:
-C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest --logpath C:\Users\allan\Desktop\shardingTest\data\rs1\1.log --dbpath C:\Users\allan\Desktop\shardingTest\data\rs1 --port 27017 --smallfiles --oplogSize 64
+C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest  --dbpath C:\Users\allan\Desktop\shardingTest\data\rs1 --port 27017 --smallfiles --oplogSize 64
 Se abre nueva terminal(terminal 2):
-C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest --logpath C:\Users\allan\Desktop\shardingTest\data\rs1\2.log --dbpath C:\Users\allan\Desktop\shardingTest\data\rs2 --port 27018 --smallfiles --oplogSize 64
+C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest  --dbpath C:\Users\allan\Desktop\shardingTest\data\rs2 --port 27018 --smallfiles --oplogSize 64
 Se abre nueva terminal(terminal 3):
-C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest --logpath C:\Users\allan\Desktop\shardingTest\data\rs1\3.log --dbpath C:\Users\allan\Desktop\shardingTest\data\rs3 --port 27019 --smallfiles --oplogSize 64
+C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest  --dbpath C:\Users\allan\Desktop\shardingTest\data\rs3 --port 27019 --smallfiles --oplogSize 64
 
 Se configuran los 3 servidores para trabajar juntos como replicas:
 Se abre nueva terminal (terminal 4):
