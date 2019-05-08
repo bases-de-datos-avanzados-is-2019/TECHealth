@@ -1,0 +1,46 @@
+En el directorio donde queremos almacenar los datos de replicacion y sharding creamos
+la carpeta data con las subcarpetas rs1, rs2, rs3:
+> C:\Users\allan\Desktop\shardingTest>mkdir data\rs1 data\rs2 data\rs3
+(directorio(carpeta) shardingTest creado anteriormente en el escritorio).
+
+Se crean 3 instancias mongod:
+C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest --logpath C:\Users\allan\Desktop\shardingTest\data\rs1\1.log --dbpath C:\Users\allan\Desktop\shardingTest\data\rs1 --port 27017 --smallfiles --oplogSize 64
+Se abre nueva terminal(terminal 2):
+C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest --logpath C:\Users\allan\Desktop\shardingTest\data\rs1\2.log --dbpath C:\Users\allan\Desktop\shardingTest\data\rs2 --port 27018 --smallfiles --oplogSize 64
+Se abre nueva terminal(terminal 3):
+C:\Users\allan\Desktop\shardingTest>mongod --replSet shTest --logpath C:\Users\allan\Desktop\shardingTest\data\rs1\3.log --dbpath C:\Users\allan\Desktop\shardingTest\data\rs3 --port 27019 --smallfiles --oplogSize 64
+
+Se configuran los 3 servidores para trabajar juntos como replicas:
+Se abre nueva terminal (terminal 4):
+C:\Users\allan\Desktop\shardingTest>mongo --port 27017
+> config = {_id:"shTest",members: [
+{_id:0, host:"localhost:27017"},
+{_id:1, host:"localhost:27018"},
+{_id:2, host:"localhost:27019"}]
+};
+> rs.initiate(config);
+shTest:SECONDARY> rs.status() (Se configura como nodo primario)
+
+A modo de prueba se hacen las siguientes consultas:
+shTest:PRIMARY> db.assigments.insert({name: "Up", duedate: "14th January"});
+shTest:PRIMARY> db.assigments.find().pretty()
+
+Se abre nueva terminal (terminal 5):
+shTest:SECONDARY> mongo --port 27018
+shTest:SECONDARY> rs.slaveOk();
+shTest:SECONDARY> db.assigments.find().pretty() (Ahora podemos acceder a los datos del nodo primario desde uno secundario)
+
+
+En terminal 4:
+shTest:PRIMARY> use admin
+shTest:PRIMARY> db.shutdownServer() (apagamos el nodo principal)
+
+En terminal 5:
+shTest:SECONDARY> rs.status() (Ahora se convierte en el nodo primario)
+
+
+
+
+
+
+
