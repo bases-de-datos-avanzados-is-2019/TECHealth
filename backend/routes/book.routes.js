@@ -2,9 +2,15 @@ const express = require('express');
 const router = express.Router();//Para poder crear las rutas de los recursos
 const Book = require('../models/book.model');
 //El metodo .send('respuesta') es la respuesta que se le envia al navegador
-router.get('/', async (req, res) => {
+router.get('/:json', async (req, res) => {
     const books = await Book.find();
-    res.json(books);
+    //res.json(books);
+    console.log(req.params.json);
+    var parametros = JSON.parse(req.params.json);
+    //const {user, password} = req.params.json;
+    console.log('user:', parametros.user);
+    console.log('password', parametros.password);
+    res.json({id: 'hola desde el servidor', tipo: 'tipo1'});
 });
 
 router.post('/:json', async (req, res) => {
