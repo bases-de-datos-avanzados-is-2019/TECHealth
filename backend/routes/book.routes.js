@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
     res.json(books);
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const { issn, nombre, tema, descripcion, libreria,
     cantidadVendida, cantidadDisponible, foto, precioDolares} = req.body;
     const newBook = new Book({issn, nombre, tema, descripcion, libreria, cantidadVendida,
