@@ -7,4 +7,7 @@ Para correr el servidor en modo desarrollo:
 > npm run dev
 (importante tener corriendo la base datos mongo)
 
-bgufjytdg
+Rutas actuales disponibles:
+> http://localhost:3000/api/offer
+> http://localhost:3000/api/bookStore
+> http://localhost:3000/api/book
