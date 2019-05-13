@@ -5,10 +5,12 @@ const Book = require('../models/book.model');
 router.get('/:json', async (req, res) => {
     const books = await Book.find();
     //res.json(books);
-    res.json({mensaje: req.params.json});
-    const {user, password} = req.params.json;
-    console.log('user:',user);
-    console.log('password', password);
+    console.log(req.params.json);
+    var parametros = JSON.parse(req.params.json);
+    //const {user, password} = req.params.json;
+    console.log('user:', parametros.user);
+    console.log('password', parametros.password);
+    res.json({id: 'hola desde el servidor', tipo: 'tipo1'});
 });
 
 router.post('/:json', async (req, res) => {
