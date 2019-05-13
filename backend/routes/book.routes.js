@@ -7,13 +7,13 @@ router.get('/', async (req, res) => {
     res.json(books);
 });
 
-router.post('/', async (req, res) => {
+router.post('/:json', async (req, res) => {
     const { issn, nombre, tema, descripcion, libreria,
     cantidadVendida, cantidadDisponible, foto, precioDolares} = req.body;
     const newBook = new Book({issn, nombre, tema, descripcion, libreria, cantidadVendida,
     cantidadDisponible, foto, precioDolares });
     await newBook.save();
-    res.json({mensaje: 'Libro guardado'});
+    res.json({mensaje: req.params.json});
 });
 
 router.delete('/:id', async (req, res) => {
