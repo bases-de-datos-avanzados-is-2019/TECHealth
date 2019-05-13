@@ -6,6 +6,9 @@ router.get('/:json', async (req, res) => {
     const books = await Book.find();
     //res.json(books);
     res.json({mensaje: req.params.json});
+    const {user, password} = req.params.json;
+    console.log('user:',user);
+    console.log('password', password);
 });
 
 router.post('/:json', async (req, res) => {
