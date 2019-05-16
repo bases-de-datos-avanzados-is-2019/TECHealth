@@ -7,19 +7,19 @@ router.get('/:json', async (req, res) => {
     //res.json(books);
     console.log(req.params.json);
     var parametros = JSON.parse(req.params.json);
-    //const {user, password} = req.params.json;
     console.log('user:', parametros.user);
     console.log('password', parametros.password);
     res.json({id: 'hola desde el servidor', tipo: 'tipo1'});
 });
 
 router.post('/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
     const { issn, nombre, tema, descripcion, libreria,
-    cantidadVendida, cantidadDisponible, foto, precioDolares} = req.body;
+        cantidadVendida, cantidadDisponible, foto, precioDolares} = parametros;
     const newBook = new Book({issn, nombre, tema, descripcion, libreria, cantidadVendida,
     cantidadDisponible, foto, precioDolares });
     await newBook.save();
-    res.json({mensaje: req.params.json});
+    res.json({mensaje: 'Libro guardado'});
 });
 
 router.delete('/:id', async (req, res) => {

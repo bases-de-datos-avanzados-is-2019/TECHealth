@@ -17,6 +17,8 @@ app.use(express.json());//Permite entender el codigo proveniente del navegador e
 app.use('/api/bookStore',require('./routes/bookStore.routes'));
 app.use('/api/book',require('./routes/book.routes'));
 app.use('/api/offer',require('./routes/offer.routes'));
+app.use('/api/user',require('./routes/user.routes'));
+app.use('/api/order',require('./routes/order.route'));
 
 //Inicializacion del servidor
 app.listen(app.get('port'), () => {
