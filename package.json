@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon backend/index.js",
-    "postinstall": "npm run start",
+    "postinstall": "npm run dev",
     "start": "cross-env NODE_ENV=production nodemon backend/index.js"
     
   },
