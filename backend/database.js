@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');//Mongoose permite conectarse a mongodb y modelar datos
 
-const MONGODB_URI = 'mongodb://localhost/LibraryTecDB';//Coneccion a nivel local con la BD TECHealthBD 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true } )
-    .then(db => console.log('DataBase connected'))
-   .catch(err => console.error(err));
+//Coneccion a nivel local con la BD 
+
+try {
+    mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true } )
+    console.log('Data Base connected');
+} catch (error) {
+    console.error(error);
+}
 module.exports = mongoose;
