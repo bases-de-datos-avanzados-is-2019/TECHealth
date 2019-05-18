@@ -22,6 +22,7 @@ app.use('/api/book',require('./routes/book.routes'));
 app.use('/api/offer',require('./routes/offer.routes'));
 app.use('/api/user',require('./routes/user.routes'));
 app.use('/api/order',require('./routes/order.routes'));
+app.use('/',require('./routes/default.routes.js'))
 
 //Inicializacion del servidor
 app.listen(app.get('port'), () => {
