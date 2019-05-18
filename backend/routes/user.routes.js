@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
 
-router.get('/:json', async (req, res) => {
+router.get('/', async (req, res) => {
     try{
-        const usuarios = await User.findOne();
+        const usuarios = await User.find();
 
         res.json(usuarios);
     }catch(error){
