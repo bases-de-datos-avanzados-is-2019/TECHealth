@@ -1,0 +1,2 @@
+Post usuario
+{"nombre": "Allan","primerApellido": "chacon","segundoApellido": "sandoval","cedula": 52000,"fechaNacimiento" : 15,"tipoUsuario": "regular","ubicacion":"san jose","correoElectronico": "ytr","nombreUsuario": "uat","password": "jsgs","telefonos": "87654"} 

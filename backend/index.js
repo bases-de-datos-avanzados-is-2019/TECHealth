@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV==='development'){
+    require('dotenv').config();
+}
 //Este archivo index.js es el que lee por defecto el backend
 const express = require('express');//El modulo express ayuda a escribir codigode servidor
 const morgan = require('morgan');//Permite visualizar mensajes en consola sobre la interaccion entre navegador y server
@@ -18,7 +21,9 @@ app.use('/api/bookStore',require('./routes/bookStore.routes'));
 app.use('/api/book',require('./routes/book.routes'));
 app.use('/api/offer',require('./routes/offer.routes'));
 app.use('/api/user',require('./routes/user.routes'));
-app.use('/api/order',require('./routes/order.route'));
+app.use('/api/order',require('./routes/order.routes'));
+app.use('/',require('./routes/default.routes'));
+app.use('/api/logIn', require('./routes/logIn.routes'));
 
 //Inicializacion del servidor
 app.listen(app.get('port'), () => {
