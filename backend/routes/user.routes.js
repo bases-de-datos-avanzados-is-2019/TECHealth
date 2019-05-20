@@ -16,13 +16,33 @@ router.post('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
     const { nombre, primerApellido,  segundoApellido, cedula, fechaNacimiento,
     tipoUsuario, ubicacion, correoElectronico, nombreUsuario, password, telefonos} = parametros;
-    const newUser = new User({nombre, primerApellido, segundoApellido, cedula, fechaNacimiento, 
-    tipoUsuario, ubicacion, correoElectronico,  nombreUsuario, password, telefonos});
+    const tempUser = await User.findOne({nombreUsuario: nombreUsuario});
+    const tempcorreoElectronico = await User.findOne({correoElectronico: correoElectronico});
+    if(tempUser !== null){
+        res.json({mensaje: 'Nombre de usuario no disponible'});
+        return
+    }
+    if(tempcorreoElectronico !== null){
+        res.json({mensaje: 'Correo electronico ya registrado por otro usuario'});
+        return 
+    }
+    const user = new User();
+    user.nombre = nombre;
+    user.primerApellido = primerApellido;
+    user.segundoApellido = segundoApellido;
+    user.cedule = cedula;
+    user.fechaNacimiento = fechaNacimiento;
+    user.tipoUsuario = tipoUsuario;
+    user.ubicacion = ubicacion;
+    user.correoElectronico = correoElectronico;
+    user.nombreUsuario = nombreUsuario;
+    user.password = user.encryptPassword(password);
+    user.telefonos = telefonos;
     try{
-        await newUser.save();
+        await user.save();
         res.json({mensaje: 'aceptado'});   
     }catch(error){
-        res.json({mensaje: error});
+        res.json({mensaje: 'error'});
     }
     
     

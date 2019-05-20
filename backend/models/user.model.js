@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
 const { Schema } = mongoose;
+
 
 const UserSchema = new Schema({
     nombre: {type: String},
@@ -14,6 +16,14 @@ const UserSchema = new Schema({
     password: {type: String},
     telefonos: {type: [String]}
 });
+
+UserSchema.methods.encryptPassword = (password) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+}
+
+UserSchema.methods.comparePassword = function (password) {
+    bcrypt.compareSync(password, this.password);
+}
 
 module.exports = mongoose.model('User', UserSchema);
 //El parametro 'User' es el nombre de la colleccion en la DB
