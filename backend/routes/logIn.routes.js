@@ -8,11 +8,11 @@ router.post('/:json', async (req, res) => {
       
     const usuario = await User.findOne({nombreUsuario: user});
     if(usuario === null){
-        res.json({mensaje: 'Usuario no encontrado'});
+        res.json({id:-1, tipoUsuario:'Usuario no encontrado'});
         return
     }
     if(usuario.comparePassword(password) === false){
-        res.json({mensaje: 'Contraseña incorrecta'});
+        res.json({id: -1, tipoUsuario:'Contraseña incorrecta'});
         return
     }
         res.json({
