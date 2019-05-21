@@ -1,2 +1,5 @@
 Post usuario
 {"nombre": "Allan","primerApellido": "chacon","segundoApellido": "sandoval","cedula": 52000,"fechaNacimiento" : 15,"tipoUsuario": "regular","ubicacion":"san jose","correoElectronico": "ytr","nombreUsuario": "uat","password": "jsgs","telefonos": "87654"} 
+
+Post libro
+{"nombre": "La isla de los hombres solos", "tema": "realidad", "descripcion": "carcel en san lucas", "libreria": "Leman", "cantidadVendida": 0 , "cantidadDisponible": 100, "foto": "hgfdsdfg", "precioDolares": 250}

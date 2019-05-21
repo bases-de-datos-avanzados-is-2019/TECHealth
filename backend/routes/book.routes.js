@@ -10,26 +10,27 @@ router.get('/:json', async (req, res) => {
         res.json({resultado: books});
         return 
     }else{
-        var consultaFiltro = new Object();
+        var consultaFiltro = {
+            $and: []
+        }
         for(var i = 0; i<filtros.length; i++){
             if(filtros[i] === 'nombre'){
-                consultaFiltro.nombre = nombre;
+                consultaFiltro.$and.push({nombre: nombre});
                 continue
             }
             if(filtros[i] === 'libreria'){
-                consultaFiltro.libreria = libreria;
+                consultaFiltro.$and.push({libreria: libreria});
                 continue
             }
             if(filtros[i] === 'tema'){
-                consultaFiltro.tema = tema;
+                consultaFiltro.$and.push({tema: tema});
                 continue
             }
-            if(filtros[i] === 'precioMin'){
-                consultaFiltro.precioMin = precioMin;
-                continue
-            }
-            if(filtros[i] === 'precioMax'){
-                consultaFiltro.precioMax = precioMax;
+            if(filtros[i] === 'precios'){
+                const valorMin = {$gte: precioMin};
+                const valorMax = {$lte: precioMax};
+                consultaFiltro.$and.push({precioDolares: valorMin});
+                consultaFiltro.$and.push({precioDolares: valorMax});
                 continue
             }
         }
@@ -45,10 +46,18 @@ router.post('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
     const {nombre, tema, descripcion, libreria,
         cantidadVendida, cantidadDisponible, foto, precioDolares} = parametros;
-    const newBook = new Book({issn, nombre, tema, descripcion, libreria, cantidadVendida,
-    cantidadDisponible, foto, precioDolares });
-    await newBook.save();
-    res.json({mensaje: 'Libro guardado'});
+    const tempBook = await Book.findOne({$and: [{nombre: nombre}, {libreria: libreria}]});//Busca unlibro que ya tenga ese titulo en la misma libreria
+    if(tempBook){//si el libro existe se envia mensaje de error
+        res.json({mensje:'El libro ya se encuentra en la libreria seleccionada'});
+        return
+    }else{//si el libro no existe se agrega a la base de datos
+        const newBook = new Book({issn, nombre, tema, descripcion, libreria, cantidadVendida,
+            cantidadDisponible, foto, precioDolares });
+        await newBook.save();
+        res.json({mensaje: 'Libro guardado'});
+        return
+    }
+   
 });
 
 router.delete('/:id', async (req, res) => {
