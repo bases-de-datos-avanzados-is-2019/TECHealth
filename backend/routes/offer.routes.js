@@ -17,14 +17,14 @@ router.post('/:json', async (req, res) => {
 
 router.delete('/:nombre', async (req, res) => {
     var query = { nombre: req.params.nombre }; 
-    await Book.findOneAndDelete(query);
+    await Offer.findOneAndDelete(query);
     res.json({mensaje: "Oferta eliminada"});
 })
 
 router.put('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
     var query = { nombre: parametros.nombre }; 
-    await Book.findOneAndUpdate(query, parametros);
+    await Offer.findOneAndUpdate(query, parametros);
     res.json({mensaje: "Oferta actualizado"});
 });
 
