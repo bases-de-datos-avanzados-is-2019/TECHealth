@@ -40,6 +40,8 @@ router.get('/:json', async (req, res) => {
 });
 
 router.post('/:json', async (req, res) => {
+    var issn = await Book.countDocuments({});
+    issn = issn + 1;
     const parametros = JSON.parse(req.params.json);
     const {nombre, tema, descripcion, libreria,
         cantidadVendida, cantidadDisponible, foto, precioDolares} = parametros;
