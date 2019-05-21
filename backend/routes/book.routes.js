@@ -2,14 +2,46 @@ const express = require('express');
 const router = express.Router();//Para poder crear las rutas de los recursos
 const Book = require('../models/book.model');
 //El metodo .send('respuesta') es la respuesta que se le envia al navegador
-router.get('/', async (req, res) => {
-    const books = await Book.find();
-    res.json(books);
+router.get('/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
+    const {nombre, libreria, tema, precioMin, precioMax, filtros} = parametros;
+    if(filtros.length === 0){//No hay filtros y se devuelven todos los libros
+        const books = await Book.find();
+        res.json({resultado: books});
+        return 
+    }else{
+        var consultaFiltro = new Object();
+        for(var i = 0; i<filtros.length; i++){
+            if(filtros[i] === 'nombre'){
+                consultaFiltro.nombre = nombre;
+                continue
+            }
+            if(filtros[i] === 'libreria'){
+                consultaFiltro.libreria = libreria;
+                continue
+            }
+            if(filtros[i] === 'tema'){
+                consultaFiltro.tema = tema;
+                continue
+            }
+            if(filtros[i] === 'precioMin'){
+                consultaFiltro.precioMin = precioMin;
+                continue
+            }
+            if(filtros[i] === 'precioMax'){
+                consultaFiltro.precioMax = precioMax;
+                continue
+            }
+        }
+        const books = await Book.find(consultaFiltro);
+        res.json({resultado: books});
+        return
+    }
 });
 
 router.post('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
-    const { issn, nombre, tema, descripcion, libreria,
+    const {nombre, tema, descripcion, libreria,
         cantidadVendida, cantidadDisponible, foto, precioDolares} = parametros;
     const newBook = new Book({issn, nombre, tema, descripcion, libreria, cantidadVendida,
     cantidadDisponible, foto, precioDolares });
