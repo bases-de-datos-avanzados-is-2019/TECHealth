@@ -60,15 +60,18 @@ router.post('/:json', async (req, res) => {
    
 });
 
-router.delete('/:id', async (req, res) => {
-    await Book.findByIdAndDelete(req.params.id);
+router.delete('/:issn', async (req, res) => {
+    var query = { issn: req.params.issn }; 
+    await Book.findOneAndDelete(query);
     res.json({mensaje: "Libro eliminado"});
 })
 
-router.put('/', (req, res) => {
-    res.json({
-        response: 'PUT Libros'
-    });//Provisional
+router.put('/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
+    const id = parametros.issn;
+    var query = { issn: id}; 
+    await Book.findOneAndUpdate(query, parametros);
+    res.json({mensaje: "Libro actualizado"});
 });
 
 module.exports = router;

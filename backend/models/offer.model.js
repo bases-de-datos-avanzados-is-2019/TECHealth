@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const Offer = new Schema({
+    nombre: {type: String, required: true},
     descripcion: {type: String, required: true},
     fechaInicio: {type: Date, required: true},
     fechaFinalizacion: {type: Date, required: true},
