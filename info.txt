@@ -11,3 +11,7 @@ Rutas actuales disponibles:
 > http://localhost:3000/api/offer
 > http://localhost:3000/api/bookStore
 > http://localhost:3000/api/book
+
+correo del proyecto:
+email: equipolibrarytec@gmail.com
+password: l1br4r1t3c

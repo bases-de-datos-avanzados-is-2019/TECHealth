@@ -35,6 +35,7 @@ app.use('/api/order',require('./routes/order.routes'));
 app.use('/',require('./routes/default.routes'));
 app.use('/api/logIn', require('./routes/logIn.routes'));
 app.use('/api/signUp', require('./routes/signUp.routes'));
+app.use('/api/email', require('./routes/email.routes'));
 
 //Inicializacion del servidor
 app.listen(app.get('port'), () => {
