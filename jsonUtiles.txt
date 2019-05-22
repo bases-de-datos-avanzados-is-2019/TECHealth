@@ -3,3 +3,6 @@ Post usuario
 
 Post libro
 {"nombre": "La isla de los hombres solos", "tema": "realidad", "descripcion": "carcel en san lucas", "libreria": "Leman", "cantidadVendida": 0 , "cantidadDisponible": 100, "foto": "hgfdsdfg", "precioDolares": 250}
+
+Post libreria
+{"codigo":"5", "nombre":"Leman", "pais":"Costa Rica", "detalleUbicacion":"San Jose avenida 2", "telefono":"2215485", "horario":"lunes a viernes: 8am-4pm"}

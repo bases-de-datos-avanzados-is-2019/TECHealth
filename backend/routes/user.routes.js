@@ -57,10 +57,12 @@ router.delete('/:id', async (req, res)=> {
     }  
 });
 
-router.put('/', (req, res) => {
-    res.json({
-        response: 'PUT Usuario'
-    });//Provisional
+router.put('/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
+    const id = parametros.id;
+    const query = {_id:id};
+    await User.findOneAndUpdate(query, parametros);
+    res.json({mensaje: 'Usuario actualizado'});
 });
 
 module.exports = router;
