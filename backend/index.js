@@ -7,6 +7,7 @@ const morgan = require('morgan');//Permite visualizar mensajes en consola sobre 
 const app = express();//app es el servidor
 const passport = require('passport');
 const session = require('express-session');
+const cors = require('cors');
 
 require('./authentication/local-authentication');
 require('./database');
@@ -25,6 +26,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 //Rutas de acceso a los recursos
 app.use('/api/bookStore',require('./routes/bookStore.routes'));

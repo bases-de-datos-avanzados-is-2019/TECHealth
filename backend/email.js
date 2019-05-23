@@ -13,6 +13,7 @@ class Email{
                 }else{
                     console.log("Correo enviado correctamente");
                 }
+            
                 
             });
         } catch (error) {

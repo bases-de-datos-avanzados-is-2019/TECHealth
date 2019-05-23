@@ -33,6 +33,10 @@ router.get('/:json', async (req, res) => {
                 consultaFiltro.$and.push({precioDolares: valorMax});
                 continue
             }
+            if(filtros[i] === 'issn'){
+                consultaFiltro.$and.push({issn : precioMin})//precionMin tambien contiene el valor issn del libro
+                continue
+            }
         }
         const books = await Book.find(consultaFiltro);
         res.json({resultado: books});
