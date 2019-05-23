@@ -14,6 +14,7 @@ router.get('/', async (req, res) => {
 
 router.post('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
+    console.log(parametros);
     const { nombre, primerApellido,  segundoApellido, cedula, fechaNacimiento,
     tipoUsuario, ubicacion, correoElectronico, nombreUsuario, password, telefonos} = parametros;
     const tempUser = await User.findOne({nombreUsuario: nombreUsuario});
