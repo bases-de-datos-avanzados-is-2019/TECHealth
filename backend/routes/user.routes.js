@@ -64,8 +64,8 @@ router.delete('/:id', async (req, res)=> {
 
 router.put('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
-    const id = parametros.id;
-    const query = {_id:id};
+    const nombreUsuario = parametros.nombreUsuario;
+    const query = {nombreUsuario: nombreUsuario};
     await User.findOneAndUpdate(query, parametros);
     res.json({mensaje: 'Usuario actualizado'});
 });
