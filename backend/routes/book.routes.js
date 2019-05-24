@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();//Para poder crear las rutas de los recursos
 const Book = require('../models/book.model');
+const Theme = require('../models/theme.model');
 //El metodo .send('respuesta') es la respuesta que se le envia al navegador
 router.get('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
@@ -42,6 +43,26 @@ router.get('/:json', async (req, res) => {
         res.json({resultado: books});
         return
     }
+});
+
+router.get('/temas', async (req, res) => {
+    var temas = await Theme.find();
+    const largo = temas.length;
+    var result = { resultado: []};
+    for (var i = 0; i < largo; i++){
+        var query = {tema: temas[i]};
+        var libros = Book.find(query);
+        var largolibros = libros.length;
+        var vendidosTotales = 0;
+        var montoTotal = 0;
+        for (var j = 0; j < largolibros; j++){
+            vendidosTotales += libros[j].cantidadVendida;
+            montoTotal += libros[j].precioDolares;
+        };
+        var temp = {tema: temas[i], cantidadVendida: vendidosTotales, monntoPromedio: montoTotal/largolibros};
+        result.resultado.push(temp);
+    };
+    res.json({resultado: result});
 });
 
 router.post('/:json', async (req, res) => {
