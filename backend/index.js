@@ -34,6 +34,7 @@ app.use('/api/book',require('./routes/book.routes'));
 app.use('/api/offer',require('./routes/offer.routes'));
 app.use('/api/user',require('./routes/user.routes'));
 app.use('/api/order',require('./routes/order.routes'));
+app.use('/api/theme',require('./routes/theme.routes'));
 app.use('/',require('./routes/default.routes'));
 app.use('/api/logIn', require('./routes/logIn.routes'));
 app.use('/api/signUp', require('./routes/signUp.routes'));
