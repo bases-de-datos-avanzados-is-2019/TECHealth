@@ -7,6 +7,12 @@ router.get('/', async(req,res) => {
     res.json(orders);
 });
 
+router.get('/IdCliente/:id', async(req,res) => {
+    const query = {IdCliente: req.params.id}
+    const orders = await Order.find(query).sort('-fechaRealizacion');
+    res.json(orders);
+});
+
 router.post('/:json', async (req, res) => {
     const orders = await Order.find();
     const IdPedido = orders[orders.length - 1].IdPedido + 1;
@@ -25,10 +31,12 @@ router.delete('/:id', async (req, res)=> {
     res.json({mensaje: "Orden eliminada"})
 });
 
-router.put('/', (req, res) => {
-    res.json({
-        response: 'PUT Usuario'
-    });//Provisional
+router.put('/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
+    const id = parametros.IdPedido;
+    var query = { IdPedido: id}; 
+    await Order.findOneAndUpdate(query, parametros);
+    res.json({mensaje: "Orden actualizada"});
 });
 
 module.exports = router;
