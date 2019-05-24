@@ -2,14 +2,18 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
 
-router.get('/', async (req, res) => {
-    try{
+router.get('/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
+    const {id} = parametros;
+    if(id === "todos"){
         const usuarios = await User.find();
 
         res.json(usuarios);
-    }catch(error){
-        res.json({error :"error"});
+    }else{
+        const usuario = await User.findOne({_id:id});
+        res.json(usuario);
     }
+    
 });
 
 router.post('/:json', async (req, res) => {
