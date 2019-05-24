@@ -7,6 +7,12 @@ router.get('/', async (req, res) => {
     res.json(offers);
 });
 
+router.get('/aplicables', async (req, res) => {
+    const ahora = Date.now();
+    const offers = await Offer.find({fechaInicio:{ $lte: ahora}, fechaFinalizacion: { $gte: ahora }});
+    res.json(offers);
+});
+
 router.post('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
     const { nombre, descripcion, fechaInicio, fechaFinalizacion, porcentajeDescuento} = parametros;

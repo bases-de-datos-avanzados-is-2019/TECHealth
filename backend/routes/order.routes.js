@@ -31,12 +31,12 @@ router.delete('/:id', async (req, res)=> {
     res.json({mensaje: "Orden eliminada"})
 });
 
-router.put('/:json', async (req, res) => {
-    const parametros = JSON.parse(req.params.json);
-    const id = parametros.IdPedido;
-    var query = { IdPedido: id}; 
+router.put('/confirmar/:id', async (req, res) => {
+    const id = req.params.id;
+    var query = { IdPedido: id};
+    const parametros = { estado: 'Procesado', fechaEntrega: Date.now() };
     await Order.findOneAndUpdate(query, parametros);
-    res.json({mensaje: "Orden actualizada"});
+    res.json({mensaje: "Orden procesada"});
 });
 
 module.exports = router;
