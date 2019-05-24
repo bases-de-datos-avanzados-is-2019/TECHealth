@@ -45,8 +45,8 @@ router.get('/:json', async (req, res) => {
     }
 });
 
-router.get('/temas', async (req, res) => {
-    /* const temas = await Theme.find();
+router.get('/con', async (req, res) => {
+    const temas = await Theme.find();
     const largo = temas.length;
     var result = { resultado: []};
     for (var i = 0; i < largo; i++){
@@ -58,10 +58,10 @@ router.get('/temas', async (req, res) => {
         for (var j = 0; j < largolibros; j++){
             vendidosTotales += libros[j].cantidadVendida;
             montoTotal += libros[j].precioDolares;
-        };
+        }
         var temp = {tema: temas[i], cantidadVendida: vendidosTotales, montoPromedio: montoTotal/largolibros};
         result.resultado.push(temp);
-    }; */
+    }
     res.json({respuesta: "result"});
 });
 
