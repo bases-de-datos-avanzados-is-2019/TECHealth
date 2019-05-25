@@ -67,7 +67,7 @@ router.put('/:json', async (req, res) => {
     const nombreUsuario = parametros.nombreUsuario;
     const query = {nombreUsuario: nombreUsuario};
     await User.findOneAndUpdate(query, parametros);
-    res.json({mensaje: 'Usuario actualizado'});
+    res.json({mensaje: 'Aceptado'});
 });
 
 module.exports = router;
