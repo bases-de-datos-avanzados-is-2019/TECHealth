@@ -59,9 +59,15 @@ router.post('/:json', async (req, res) => {
     }else{//si el libro no existe se agrega a la base de datos
         const newBook = new Book({issn, nombre, tema, descripcion, libreria, cantidadVendida,
             cantidadDisponible, foto, precioDolares });
-        await newBook.save();
-        res.json({mensaje: 'Libro guardado'});
-        return
+        try {
+            await newBook.save();
+            res.json({mensaje: 'Libro guardado'});
+            return
+        } catch (error) {
+            res.json({mensaje: 'Error al guardar libro'});
+            return
+        }
+      
     }
    
 });
