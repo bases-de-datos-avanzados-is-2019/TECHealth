@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user.model');
+const bcrypt = require('bcrypt-nodejs');
+
+const encryptPassword = (password) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+}
 
 router.get('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
@@ -66,6 +71,8 @@ router.put('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
     const nombreUsuario = parametros.nombreUsuario;
     const query = {nombreUsuario: nombreUsuario};
+    parametros.password = encryptPassword(parametros.password);
+    console.log(parametros.password);
     await User.findOneAndUpdate(query, parametros);
     res.json({mensaje: 'Aceptado'});
 });
