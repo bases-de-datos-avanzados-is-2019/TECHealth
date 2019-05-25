@@ -4,13 +4,13 @@ const router = express.Router();//Para poder crear las rutas de los recursos
 const Offer = require('../models/offer.model');
 router.get('/', async (req, res) => {
     const offers = await Offer.find();
-    res.json(offers);
+    res.json({result: offers});
 });
 
 router.get('/aplicables', async (req, res) => {
     const ahora = Date.now();
     const offers = await Offer.find({fechaInicio:{ $lte: ahora}, fechaFinalizacion: { $gte: ahora }});
-    res.json(offers);
+    res.json({result: offers});
 });
 
 router.post('/:json', async (req, res) => {
