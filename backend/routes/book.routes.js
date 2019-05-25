@@ -45,26 +45,6 @@ router.get('/:json', async (req, res) => {
     }
 });
 
-router.get('/temas', async (req, res) => {
-    var temas = await Theme.find();
-    const largo = temas.length;
-    var result = { resultado: []};
-    for (var i = 0; i < largo; i++){
-        var query = {tema: temas[i]};
-        var libros = await Book.find(query);
-        var largolibros = libros.length;
-        var vendidosTotales = 0;
-        var montoTotal = 0;
-        for (var j = 0; j < largolibros; j++){
-            vendidosTotales += libros[j].cantidadVendida;
-            montoTotal += libros[j].precioDolares;
-        };
-        var temp = {tema: temas[i], cantidadVendida: vendidosTotales, monntoPromedio: montoTotal/largolibros};
-        result.resultado.push(temp);
-    };
-    res.json({resultado: result});
-});
-
 router.post('/:json', async (req, res) => {
     //var issn = await Book.countDocuments({});
     //issn = issn + 1;
@@ -106,5 +86,6 @@ router.put('/:json', async (req, res) => {
     await Book.findOneAndUpdate(query, parametros);
     res.json({mensaje: "Libro actualizado"});
 });
+
 
 module.exports = router;
