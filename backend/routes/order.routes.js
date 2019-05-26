@@ -65,21 +65,23 @@ router.get('/rangos', async(req,res) => {
 });
 
 router.get('/tresClientes', async(req,res) => {
-    var clientes = await Order.find({}, {'IdCliente': 1}).distinct('IdCliente');
-    /* const largo = clientes.length;
+    var clientes = await Order.find().distinct('IdCliente');
+    const largo = clientes.length;
+    console.log(largo);
     var result = { resultado: []};
     for (var i = 0; i < largo; i++){
-        var query = {IdCliente: clientes[i]._id};
+        var query = {IdCliente: clientes[i]};
+        console.log(query);
         var ordenes = await Order.find(query);
         var largoOrdenes = ordenes.length;
-        var numLibros = [];
-        for (var j = 0; j < largoOrdenes; j++){
-            numLibros.push(ordenes[j].libros.length);
-        };
-        var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: Math.max(numLibros), minPedidos: Math.min(numLibros)};
+        console.log(largoOrdenes);
+        var temp = {_id: clientes[i], pedidos: largoOrdenes};
         result.resultado.push(temp);
-    }; */
-    res.json(clientes);
+    };
+
+    result.resultado.sort((a, b) => {return b.pedidos-a.pedidos});
+    result.resultado.splice(3);
+    res.json(result);
     return;
 });
 
