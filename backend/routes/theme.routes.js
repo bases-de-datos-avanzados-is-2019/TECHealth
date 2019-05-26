@@ -45,7 +45,7 @@ router.delete('/:codigo', async (req, res) => {
 
 router.put('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
-    var query = { nombre: parametros.nombre }; 
+    var query = { _id: parametros.id }; 
     await Theme.findOneAndUpdate(query, parametros);
     res.json({mensaje: "Tematica actualizado"});
 });
