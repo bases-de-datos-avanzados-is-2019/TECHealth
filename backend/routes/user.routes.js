@@ -60,7 +60,7 @@ router.post('/:json', async (req, res) => {
 
 router.delete('/:id', async (req, res)=> {
     try{
-        await User.findByIdAndDelete(req.param.id);
+        await User.findByIdAndDelete(req.params.id);
         res.json({mensaje: "usuario eliminado"})  
     }catch(error){
         res.json({mensaje: error});
