@@ -1,10 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/order.model');
+const User = require('../models/user.model');
 
 router.get('/', async(req,res) => {
     const orders = await Order.find().sort('-fechaRealizacion');
     res.json(orders);
+});
+
+router.get('/rangos', async(req,res) => {
+    var clientes = await User.find({tipoUsuario: 'cliente'}, {'_id':1});
+    const largo = clientes.length;
+    var result = { resultado: []};
+    for (var i = 0; i < largo; i++){
+        var query = {IdCliente: clientes[i]._id};
+        var ordenes = await Order.find(query);
+        var largoOrdenes = ordenes.length;
+        var numLibros = [];
+        for (var j = 0; j < largoOrdenes; j++){
+            numLibros.push(ordenes[j].libros.length);
+        };
+        var temp = {_id: clientes[i]._id, maxPedidos: Math.max(numLibros), minPedidos: Math.min(numLibros)};
+        result.resultado.push(temp);
+    };
+    res.json(result);
+    return;
 });
 
 router.get('/IdCliente/:id', async(req,res) => {
@@ -41,6 +61,13 @@ router.put('/confirmar/:id', async (req, res) => {
     const parametros = { estado: 'Procesado', fechaEntrega: Date.now() };
     await Order.findOneAndUpdate(query, parametros);
     res.json({mensaje: "Orden procesada"});
+});
+
+router.put('/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
+    var query = { IdPedido: parametros.id }; 
+    await Theme.findOneAndUpdate(query, parametros);
+    res.json({mensaje: "Orden actualizado"});
 });
 
 module.exports = router;
