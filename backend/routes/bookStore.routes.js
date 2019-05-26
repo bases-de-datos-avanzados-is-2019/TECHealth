@@ -8,8 +8,10 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/:json', async (req, res) => {
+    const bookStores = await BookStore.find();
+    const codigo = bookStores[bookStores.length - 1].codigo + 1;
     const parametros = JSON.parse(req.params.json);
-    const { codigo, nombre, pais, detalleUbicacion, telefono, horario } = parametros;
+    const { nombre, pais, detalleUbicacion, telefono, horario } = parametros;
     const newBookStore = new BookStore({codigo, nombre, pais, detalleUbicacion, telefono, horario});
     await newBookStore.save();
     res.json({mensaje: 'Libreria guardada'});

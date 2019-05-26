@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const BookStoreSchema = new Schema({
-    codigo: {type: String, required: true},
+    codigo: {type: Number, required: true},
     nombre: {type: String, required: true},
     pais: {type: String, required: true},
     detalleUbicacion: {type: String, required: true},
