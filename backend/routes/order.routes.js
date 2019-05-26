@@ -39,7 +39,7 @@ router.get('/filtros/:json', async (req, res) => {
 });
 
 router.get('/rangos', async(req,res) => {
-    var clientes = await User.find({tipoUsuario: 'cliente'}, {'_id':1});
+    var clientes = await User.find({tipoUsuario: 'cliente'}, {'_id':1, 'nombreUsuario': 1});
     const largo = clientes.length;
     var result = { resultado: []};
     for (var i = 0; i < largo; i++){
@@ -50,7 +50,7 @@ router.get('/rangos', async(req,res) => {
         for (var j = 0; j < largoOrdenes; j++){
             numLibros.push(ordenes[j].libros.length);
         };
-        var temp = {nombreUsuario: clientes[i].nombreUsuario, maxPedidos: Math.max(numLibros), minPedidos: Math.min(numLibros)};
+        var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: Math.max(numLibros), minPedidos: Math.min(numLibros)};
         result.resultado.push(temp);
     };
     res.json(result);
