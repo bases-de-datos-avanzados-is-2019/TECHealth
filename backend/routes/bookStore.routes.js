@@ -4,7 +4,7 @@ const router = express.Router();//Para poder crear las rutas de los recursos
 const BookStore = require('../models/bookStore.model');
 router.get('/', async (req, res) => {
     const bookStores = await BookStore.find();
-    res.json(bookStores);
+    res.json({resultado: bookStores});
 });
 
 router.post('/:json', async (req, res) => {
