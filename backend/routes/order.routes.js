@@ -4,9 +4,38 @@ const Order = require('../models/order.model');
 const User = require('../models/user.model');
 const Book = require('../models/book.model');
 
-router.get('/', async(req,res) => {
-    const orders = await Order.find().sort('-fechaRealizacion');
-    res.json(orders);
+router.get('/filtros/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
+    const {IdCliente, estado, fechaMin, fechaMax, filtros} = parametros;
+    if(filtros.length === 0){//No hay filtros y se devuelven por fecha de realizacion
+        const orders = await Order.find().sort('-fechaRealizacion');
+        res.json(orders);
+        return 
+    }else{
+        var consultaFiltro = {
+            $and: []
+        }
+        for(var i = 0; i<filtros.length; i++){
+            if(filtros[i] === 'IdCliente'){
+                consultaFiltro.$and.push({IdCliente: IdCliente});
+                continue
+            }
+            if(filtros[i] === 'estado'){
+                consultaFiltro.$and.push({estado: estado});
+                continue
+            }
+            if(filtros[i] === 'fechas'){
+                const valorMin = {$gte: fechaMin};
+                const valorMax = {$lte: fechaMax};
+                consultaFiltro.$and.push({fechaRealizacion: valorMin});
+                consultaFiltro.$and.push({fechaRealizacion: valorMax});
+                continue
+            }
+        }
+        const orders = await Order.find(consultaFiltro);
+        res.json({resultado: orders});
+        return
+    }
 });
 
 router.get('/rangos', async(req,res) => {
