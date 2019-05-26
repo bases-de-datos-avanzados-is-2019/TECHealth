@@ -14,7 +14,8 @@ const UserSchema = new Schema({
     correoElectronico: {type: String},
     nombreUsuario: {type: String},
     password: {type: String},
-    telefonos: {type: [String]}
+    telefonos: {type: [String]},
+    libreria: {type: String}
 });
 
 UserSchema.methods.encryptPassword = (password) => {
