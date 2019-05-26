@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/order.model');
 const User = require('../models/user.model');
+const Book = require('../models/book.model');
 
 router.get('/', async(req,res) => {
     const orders = await Order.find().sort('-fechaRealizacion');
@@ -20,7 +21,7 @@ router.get('/rangos', async(req,res) => {
         for (var j = 0; j < largoOrdenes; j++){
             numLibros.push(ordenes[j].libros.length);
         };
-        var temp = {_id: clientes[i]._id, maxPedidos: Math.max(numLibros), minPedidos: Math.min(numLibros)};
+        var temp = {nombreUsuario: clientes[i].nombreUsuario, maxPedidos: Math.max(numLibros), minPedidos: Math.min(numLibros)};
         result.resultado.push(temp);
     };
     res.json(result);
@@ -60,6 +61,12 @@ router.put('/confirmar/:id', async (req, res) => {
     var query = { IdPedido: id};
     const parametros = { estado: 'Procesado', fechaEntrega: Date.now() };
     await Order.findOneAndUpdate(query, parametros);
+    const orden =  await Order.findOne(query);
+    const libros =  orden.libros;
+    for (var i = 0; i < libros.length; i++){
+        const libro =  await Book.findOne({issn: libros[i]});
+        await Book.findOneAndUpdate({issn: libros[i]}, {cantidadVendida: libro.cantidadVendida + 1, cantidadDisponible: libro.cantidadDisponible - 1})
+    }
     res.json({mensaje: "Orden procesada"});
 });
 
