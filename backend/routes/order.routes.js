@@ -66,7 +66,7 @@ router.put('/confirmar/:id', async (req, res) => {
 router.put('/:json', async (req, res) => {
     const parametros = JSON.parse(req.params.json);
     var query = { IdPedido: parametros.id }; 
-    await Theme.findOneAndUpdate(query, parametros);
+    await Order.findOneAndUpdate(query, parametros);
     res.json({mensaje: "Orden actualizado"});
 });
 
