@@ -15,6 +15,11 @@ router.get('/temas', async (req, res) => {
     for (var i = 0; i < largo; i++){
         var query = {tema: temas[i].nombre};
         var libros = await Book.find(query);
+        if (libros[0] === undefined){
+            var temp = {tema: temas[i].nombre, cantidadVendida: 0, montoPromedio: 0};
+            result.resultado.push(temp);
+            continue;
+        }
         var largolibros = libros.length;
         var vendidosTotales = 0;
         var montoTotal = 0;
