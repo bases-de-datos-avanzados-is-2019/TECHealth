@@ -45,26 +45,6 @@ router.get('/:json', async (req, res) => {
     }
 });
 
-router.get('/con', async (req, res) => {
-    const temas = await Theme.find();
-    const largo = temas.length;
-    var result = { resultado: []};
-    for (var i = 0; i < largo; i++){
-        var query = {tema: temas[i]};
-        var libros = await Book.find(query);
-        var largolibros = libros.length;
-        var vendidosTotales = 0;
-        var montoTotal = 0;
-        for (var j = 0; j < largolibros; j++){
-            vendidosTotales += libros[j].cantidadVendida;
-            montoTotal += libros[j].precioDolares;
-        }
-        var temp = {tema: temas[i], cantidadVendida: vendidosTotales, montoPromedio: montoTotal/largolibros};
-        result.resultado.push(temp);
-    }
-    res.json({respuesta: "result"});
-});
-
 router.post('/:json', async (req, res) => {
     //var issn = await Book.countDocuments({});
     //issn = issn + 1;
@@ -107,5 +87,11 @@ router.put('/:json', async (req, res) => {
     res.json({mensaje: "Libro actualizado"});
 });
 
+
+router.get('/admin/masComprados', async (req, res) => {
+    const books = await Book.find({}, {'nombre': 1, 'cantidadVendida': 1}).sort('-cantidadVendida').limit(5);
+    res.json({resultado: books});
+    return 
+});
 
 module.exports = router;
