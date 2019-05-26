@@ -15,11 +15,23 @@ router.post('/:json', async (req, res) => {
         res.json({id: -1, tipoUsuario:'Contraseña incorrecta'});
         return
     }
+    if(usuario.tipoUsuario === "gerente"){
+        res.json({
+            id: usuario._id,
+            tipoUsuario: usuario.tipoUsuario,
+            libreria: usuario.libreria
+        }
+        );
+        return
+    }else{
         res.json({
             id: usuario._id,
             tipoUsuario: usuario.tipoUsuario
         }
-        );    
+        );
+        return
+    }
+            
 });
 
 module.exports = router;
