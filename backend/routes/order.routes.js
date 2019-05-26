@@ -32,7 +32,41 @@ router.get('/filtros/:json', async (req, res) => {
                 continue
             }
         }
-        const orders = await Order.find(consultaFiltro);
+        const orders = await Order.find(consultaFiltro).sort('-fechaRealizacion');;
+        res.json({resultado: orders});
+        return
+    }
+});
+
+router.get('/cantidades/:json', async (req, res) => {
+    const parametros = JSON.parse(req.params.json);
+    const {IdCliente, estado, fechaMin, fechaMax, filtros} = parametros;
+    if(filtros.length === 0){//No hay filtros y se devuelven por fecha de realizacion
+        const orders = await Order.find().sort('-fechaRealizacion');
+        res.json(orders);
+        return 
+    }else{
+        var consultaFiltro = {
+            $and: []
+        }
+        for(var i = 0; i<filtros.length; i++){
+            if(filtros[i] === 'IdCliente'){
+                consultaFiltro.$and.push({IdCliente: IdCliente});
+                continue
+            }
+            if(filtros[i] === 'estado'){
+                consultaFiltro.$and.push({estado: estado});
+                continue
+            }
+            if(filtros[i] === 'fechas'){
+                const valorMin = {$gte: fechaMin};
+                const valorMax = {$lte: fechaMax};
+                consultaFiltro.$and.push({fechaRealizacion: valorMin});
+                consultaFiltro.$and.push({fechaRealizacion: valorMax});
+                continue
+            }
+        }
+        const orders = await Order.find(consultaFiltro).countDocuments();;
         res.json({resultado: orders});
         return
     }
@@ -71,10 +105,8 @@ router.get('/tresClientes', async(req,res) => {
     var result = { resultado: []};
     for (var i = 0; i < largo; i++){
         var query = {IdCliente: clientes[i]};
-        console.log(query);
         var ordenes = await Order.find(query);
         var largoOrdenes = ordenes.length;
-        console.log(largoOrdenes);
         var temp = {_id: clientes[i], pedidos: largoOrdenes};
         result.resultado.push(temp);
     };
