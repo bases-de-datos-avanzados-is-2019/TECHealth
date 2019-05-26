@@ -58,7 +58,7 @@ router.get('/rangos', async(req,res) => {
 });
 
 router.get('/tresClientes', async(req,res) => {
-    var clientes = await Order.find({}, {'Idcliente': 1}).distinct('Idcliente');
+    var clientes = await Order.find({}, {'IdCliente': 1}).distinct('IdCliente');
     /* const largo = clientes.length;
     var result = { resultado: []};
     for (var i = 0; i < largo; i++){
