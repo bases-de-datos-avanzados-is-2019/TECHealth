@@ -50,7 +50,7 @@ router.get('/rangos', async(req,res) => {
         for (var j = 0; j < largoOrdenes; j++){
             numLibros.push(ordenes[j].libros.length);
         };
-        var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: Math.max(numLibros), minPedidos: Math.min(numLibros)};
+        var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: Math.max.apply(Math, numLibros), minPedidos: Math.min.apply(Math, numLibros)};
         result.resultado.push(temp);
     };
     res.json(result);
