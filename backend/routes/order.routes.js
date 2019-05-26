@@ -45,18 +45,20 @@ router.get('/rangos', async(req,res) => {
     for (var i = 0; i < largo; i++){
         var query = {IdCliente: clientes[i]._id};
         var ordenes = await Order.find(query);
+        if (ordenes[0] === undefined){
+            var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: 0, minPedidos: 0};
+            result.resultado.push(temp);
+            continue;
+        }
         var largoOrdenes = ordenes.length;
         var numLibros = [];
         for (var j = 0; j < largoOrdenes; j++){
             numLibros.push(ordenes[j].libros.length);
         };
-        if (numLibros[0] !== 0){
-            var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: Math.max.apply(Math, numLibros), minPedidos: Math.min.apply(Math, numLibros)};
-            result.resultado.push(temp);
-        }else{
-            var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: '0', minPedidos: '0'};
-            result.resultado.push(temp);
-        }
+        
+        var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: Math.max.apply(Math, numLibros), minPedidos: Math.min.apply(Math, numLibros)};
+        result.resultado.push(temp);
+        
     };
     res.json(result);
     return;
