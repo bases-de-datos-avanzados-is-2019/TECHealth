@@ -45,10 +45,6 @@ router.get('/rangos', async(req,res) => {
     for (var i = 0; i < largo; i++){
         var query = {IdCliente: clientes[i]._id};
         var ordenes = await Order.find(query);
-        if(ordenes[0] === undefined){
-            var temp = {_id: clientes[i]._id, nombreUsuario: clientes[i].nombreUsuario, maxPedidos: '0', minPedidos: '0'};
-            continue;
-        }
         var largoOrdenes = ordenes.length;
         var numLibros = [];
         for (var j = 0; j < largoOrdenes; j++){
