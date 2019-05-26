@@ -83,10 +83,36 @@ router.get('/tresClientes', async(req,res) => {
     return;
 });
 
-router.get('/IdCliente/:id', async(req,res) => {
-    const query = {IdCliente: req.params.id}
-    const orders = await Order.find(query).sort('-fechaRealizacion');
-    res.json(orders);
+router.get('/IdCliente/:json', async(req,res) => {
+    const parametros = JSON.parse(req.params.json);
+    const {IdCliente, estado, fechaMin, fechaMax, filtros} = parametros;
+    const query = {IdCliente: IdCliente}
+    if(filtros.length === 0){//No hay filtros y se devuelven por fecha de realizacion
+        const orders = await Order.find(query).sort('-fechaRealizacion');
+        res.json(orders);
+        return 
+    }else{
+        var consultaFiltro = {
+            $and: []
+        }
+        consultaFiltro.$and.push(query);
+        for(var i = 0; i<filtros.length; i++){
+            if(filtros[i] === 'estado'){
+                consultaFiltro.$and.push({estado: estado});
+                continue
+            }
+            if(filtros[i] === 'fechas'){
+                const valorMin = {$gte: fechaMin};
+                const valorMax = {$lte: fechaMax};
+                consultaFiltro.$and.push({fechaRealizacion: valorMin});
+                consultaFiltro.$and.push({fechaRealizacion: valorMax});
+                continue
+            }
+        }
+        const orders = await Order.find(consultaFiltro).sort('-fechaRealizacion');;
+        res.json({cantidadResultados: orders.length, resultados: orders});
+        return
+    }
 });
 
 router.post('/:json', async (req, res) => {

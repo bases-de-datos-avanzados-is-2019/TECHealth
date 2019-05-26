@@ -94,4 +94,10 @@ router.get('/admin/masComprados', async (req, res) => {
     return 
 });
 
+router.get('/gerente/masComprados/:lib', async (req, res) => {
+    const books = await Book.find({libreria: req.params.lib}, {'nombre': 1, 'cantidadVendida': 1}).sort('-cantidadVendida').limit(5);
+    res.json({resultado: books});
+    return 
+});
+
 module.exports = router;
