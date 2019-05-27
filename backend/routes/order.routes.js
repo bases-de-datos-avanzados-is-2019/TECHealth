@@ -38,6 +38,25 @@ router.get('/filtros/:json', async (req, res) => {
     }
 });
 
+router.get('/filtroTemas/:tema', async(req,res) => {
+    var orders = await Order.find({});
+    const largo = orders.length;
+    var result = { tema: req.params.tema, resultado: []};
+    for (var i = 0; i < largo; i++){
+        var librosOrden = orders[i].libros;
+        var largoLibros = librosOrden.length;
+        for (var j = 0; j < largoLibros; j++){
+            const libro = await Book.findOne({issn: librosOrden[j]});
+            if (libro.tema === req.params.tema){
+                result.resultado.push(orders[i]);
+                break;
+            }
+        };
+    };
+    res.json(result);
+    return;
+});
+
 router.get('/rangos', async(req,res) => {
     var clientes = await User.find({tipoUsuario: 'cliente'}, {'_id':1, 'nombreUsuario': 1});
     const largo = clientes.length;
